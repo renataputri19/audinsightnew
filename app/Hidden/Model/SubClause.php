@@ -21,3 +21,4 @@ class SubClause extends Model
         return $this->hasMany(SubSubClause::class);
     }
 }
+

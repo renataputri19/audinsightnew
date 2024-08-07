@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SubSubClauseResource\Pages;
-use App\Filament\Resources\SubSubClauseResource\RelationManagers;
-use App\Models\SubSubClause;
+use App\Filament\Resources\ExplanationResource\Pages;
+use App\Filament\Resources\ExplanationResource\RelationManagers;
+use App\Models\Explanation;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,21 +13,20 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class SubSubClauseResource extends Resource
+class ExplanationResource extends Resource
 {
-    protected static ?string $model = SubSubClause::class;
+    protected static ?string $model = Explanation::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 6;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('sub_clause_id')
-                    ->relationship('subClause', 'title')->required(),
-                Forms\Components\TextInput::make('number')->required(),
-                Forms\Components\TextInput::make('title')->required(),
+                Forms\Components\Select::make('sub_sub_clause_id')
+                    ->relationship('subSubClause', 'title')->required(),
+                Forms\Components\Textarea::make('explanation')->required(),
             ]);
     }
 
@@ -35,9 +34,8 @@ class SubSubClauseResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('subClause.title')->label('Sub Clause'),
-                Tables\Columns\TextColumn::make('number'),
-                Tables\Columns\TextColumn::make('title'),
+                Tables\Columns\TextColumn::make('subSubClause.title')->label('Sub Sub Clause'),
+                Tables\Columns\TextColumn::make('explanation')->label('Explanation'),
             ])
             ->filters([
                 //
@@ -62,9 +60,9 @@ class SubSubClauseResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSubSubClauses::route('/'),
-            'create' => Pages\CreateSubSubClause::route('/create'),
-            'edit' => Pages\EditSubSubClause::route('/{record}/edit'),
+            'index' => Pages\ListExplanations::route('/'),
+            'create' => Pages\CreateExplanation::route('/create'),
+            'edit' => Pages\EditExplanation::route('/{record}/edit'),
         ];
     }
 }

@@ -17,6 +17,18 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Filament\Facades\Filament;
+use Filament\Navigation\NavigationGroup;
+use App\Filament\Resources\ClauseResource;
+use App\Filament\Resources\SubClauseResource;
+use App\Filament\Resources\SubSubClauseResource;
+use App\Filament\Resources\RequirementResource;
+use App\Filament\Resources\GapAnalysisResource;
+use App\Filament\Resources\ExplanationResource;
+use Filament\Navigation\NavigationBuilder;
+use Filament\Navigation\NavigationItem;
+use App\Filament\Pages\Dashboard;
+
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -53,6 +65,32 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->navigation(function (NavigationBuilder $builder): NavigationBuilder {
+                return $builder->groups([
+                    NavigationGroup::make('ISO 9001 Management')
+                        ->items([
+                            NavigationItem::make('Clauses')
+                                ->url(ClauseResource::getUrl('index'))
+                                ->icon('heroicon-o-collection'),
+                            NavigationItem::make('Sub Clauses')
+                                ->url(SubClauseResource::getUrl('index'))
+                                ->icon('heroicon-o-collection'),
+                            NavigationItem::make('Sub Sub Clauses')
+                                ->url(SubSubClauseResource::getUrl('index'))
+                                ->icon('heroicon-o-collection'),
+                            NavigationItem::make('Requirements')
+                                ->url(RequirementResource::getUrl('index'))
+                                ->icon('heroicon-o-collection'),
+                            NavigationItem::make('Gap Analyses')
+                                ->url(GapAnalysisResource::getUrl('index'))
+                                ->icon('heroicon-o-collection'),
+                            NavigationItem::make('Explanations')
+                                ->url(ExplanationResource::getUrl('index'))
+                                ->icon('heroicon-o-collection'),
+                        ]),
+                ]);
+            });
+            
     }
 }

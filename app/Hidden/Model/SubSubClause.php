@@ -16,18 +16,9 @@ class SubSubClause extends Model
         return $this->belongsTo(SubClause::class);
     }
 
-    public function requirements()
+    public function files()
     {
-        return $this->hasMany(Requirement::class);
-    }
-
-    public function gapAnalyses()
-    {
-        return $this->hasMany(GapAnalysis::class);
-    }
-
-    public function explanations()
-    {
-        return $this->hasMany(Explanation::class);
+        return $this->hasMany(File::class);
     }
 }
+

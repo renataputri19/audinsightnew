@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SubSubClauseResource\Pages;
-use App\Filament\Resources\SubSubClauseResource\RelationManagers;
-use App\Models\SubSubClause;
+use App\Filament\Resources\SubClauseResource\Pages;
+use App\Filament\Resources\SubClauseResource\RelationManagers;
+use App\Models\SubClause;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,20 +12,21 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
 
-class SubSubClauseResource extends Resource
+class SubClauseResource extends Resource
 {
-    protected static ?string $model = SubSubClause::class;
+    protected static ?string $model = SubClause::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('sub_clause_id')
-                    ->relationship('subClause', 'title')->required(),
+                Forms\Components\Select::make('clause_id')
+                    ->relationship('clause', 'title')->required(),
                 Forms\Components\TextInput::make('number')->required(),
                 Forms\Components\TextInput::make('title')->required(),
             ]);
@@ -35,7 +36,7 @@ class SubSubClauseResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('subClause.title')->label('Sub Clause'),
+                Tables\Columns\TextColumn::make('clause.title')->label('Clause'),
                 Tables\Columns\TextColumn::make('number'),
                 Tables\Columns\TextColumn::make('title'),
             ])
@@ -62,9 +63,9 @@ class SubSubClauseResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSubSubClauses::route('/'),
-            'create' => Pages\CreateSubSubClause::route('/create'),
-            'edit' => Pages\EditSubSubClause::route('/{record}/edit'),
+            'index' => Pages\ListSubClauses::route('/'),
+            'create' => Pages\CreateSubClause::route('/create'),
+            'edit' => Pages\EditSubClause::route('/{record}/edit'),
         ];
     }
 }
