@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Requirement;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.app');
 });
 
+Route::get('/test-manage-requirements', function () {
+    $requirements = Requirement::all();
+    return view('filament.pages.manage-requirements', compact('requirements'));
+});
